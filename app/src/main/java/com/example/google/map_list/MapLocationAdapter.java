@@ -42,7 +42,7 @@ public class MapLocationAdapter extends RecyclerView.Adapter<MapLocationViewHold
 
         viewHolder.itemView.setTag(mapActivity);
 
-        viewHolder.name.setText(mapActivity.name);
+        viewHolder.title.setText(mapActivity.name);
         viewHolder.description.setText(mapActivity.lat + " " + mapActivity.lng);
 
         // Since the map is re-used, need to remove pre-existing map features.

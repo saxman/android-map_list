@@ -11,7 +11,7 @@ import com.google.android.gms.maps.MapsInitializer;
 
 public class MapLocationViewHolder extends RecyclerView.ViewHolder {
     protected MapView map;
-    protected TextView name;
+    protected TextView title;
     protected TextView description;
 
     protected GoogleMap googleMap;
@@ -19,16 +19,16 @@ public class MapLocationViewHolder extends RecyclerView.ViewHolder {
     public MapLocationViewHolder(Context context, View view) {
         super(view);
 
-        name = (TextView) view.findViewById(R.id.name);
+        title = (TextView) view.findViewById(R.id.title);
         description = (TextView) view.findViewById(R.id.description);
         map = (MapView) view.findViewById(R.id.map);
 
         // Create the MapView and initialize the corresponding GoogleMap.
-        // Should use MapView:getMapAsync() instead of deprecated to initialize the GoogleMap,
-        // MapView::getMap(); however, this ViewHolder can be bound to
+        // Should use MapView:getMapAsync() instead of MapView::getMap() (deprecated) to initialize
+        // the GoogleMap; however, this ViewHolder can be bound to
         // (RecyclerView.Adapter::onBindViewHolder()) before the async onMapReady() callback
         // is called. onBindViewHolder() requires access to the GoogleMap for setting
-        // map features for the bound map location.
+        // map features, so there's a race condition.
 
         map.onCreate(null);
 

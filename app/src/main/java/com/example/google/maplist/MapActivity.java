@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.google.map_list;
+package com.example.google.maplist;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,7 +26,6 @@ import android.view.MenuItem;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;

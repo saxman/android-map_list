@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.google.map_list;
+package com.example.google.maplist;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -26,11 +26,11 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 
 public class MapLocationViewHolder extends RecyclerView.ViewHolder {
-    protected MapView map;
-    protected TextView title;
-    protected TextView description;
+    public MapView map;
+    public TextView title;
+    public TextView description;
 
-    protected GoogleMap googleMap;
+    public GoogleMap googleMap;
 
     public MapLocationViewHolder(Context context, View view) {
         super(view);

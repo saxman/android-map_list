@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.google.map_list" >
+    package="com.example.google.maplist" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
     <application
         android:allowBackup="true"
@@ -22,7 +21,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapListActivity"
+            android:name=".MapListActivityImpl"
             android:label="@string/title_activity_list" >
 
             <intent-filter>
@@ -32,12 +31,12 @@
         </activity>
 
         <activity
-            android:name=".MapActivity"
+            android:name="com.example.google.maplist.MapActivity"
             android:label="@string/title_activity_map" >
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MapListActivity" />
+                android:value=".MapListActivityImpl" />
         </activity>
     </application>
 

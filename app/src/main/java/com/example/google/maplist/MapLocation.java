@@ -14,24 +14,16 @@
  * limitations under the License.
  */
 
-package com.example.google.map_list;
+package com.example.google.maplist;
 
-import android.content.Context;
-import android.util.AttributeSet;
-import android.view.MotionEvent;
+import com.google.android.gms.maps.model.LatLng;
 
-/**
- * Custom CardView class that intercepts touch events that would otherwise be passed to its
- * children. Useful when one of the children is a MapView, which receives touch event to markers
- * and info windows.
- */
-public class MapCardView extends android.support.v7.widget.CardView {
-    public MapCardView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
+public class MapLocation {
+    public String name;
+    public LatLng center;
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return true;
+    public MapLocation(String name, double lat, double lng) {
+        this.name = name;
+        this.center = new LatLng(lat, lng);
     }
 }

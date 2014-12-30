@@ -1,4 +1,4 @@
-<com.example.google.map_list.MapCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.google.maplist.MapCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
@@ -41,4 +41,4 @@
             style="@style/MapCardDescription" />
 
     </RelativeLayout>
-</com.example.google.map_list.MapCardView>
+</com.example.google.maplist.MapCardView>

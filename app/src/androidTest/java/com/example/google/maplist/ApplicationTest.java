@@ -1,4 +1,4 @@
-package com.example.google.map_list;
+package com.example.google.maplist;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -14,104 +14,30 @@
  * limitations under the License.
  */
 
-package com.example.google.map_list;
+package com.example.google.maplist;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.maps.MapView;
-
+import java.util.ArrayList;
 import java.util.Arrays;
 
-public class MapListActivity extends ActionBarActivity {
-
-    private MapLocationAdapter mAdapter;
-    private RecyclerView mRecyclerView;
-
+public class MapListActivityImpl extends MapListActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_list);
-
-        mRecyclerView = (RecyclerView) findViewById(R.id.card_list);
         mRecyclerView.setHasFixedSize(true);
-
-        // Determine the number of columns to display, based on screen width.
-        int rows = getResources().getInteger(R.integer.map_grid_cols);
-        GridLayoutManager layoutManager = new GridLayoutManager(this, rows, GridLayoutManager.VERTICAL, false);
-        mRecyclerView.setLayoutManager(layoutManager);
-
-        mAdapter = new MapLocationAdapter(Arrays.asList(LIST_LOCATIONS));
-
-        // Delay attaching Adapter to RecyclerView until we can ensure that we have correct
-        // Google Play service version (in onResume).
     }
 
     @Override
-    public void onLowMemory() {
-        super.onLowMemory();
+    protected MapLocationAdapter createMapListAdapter() {
+        ArrayList<MapLocation> mapLocations = new ArrayList<>(LIST_LOCATIONS.length);
+        mapLocations.addAll(Arrays.asList(LIST_LOCATIONS));
 
-        for (MapView m : mAdapter.getMaps()) {
-            m.onLowMemory();
-        }
-    }
+        MapLocationAdapter adapter = new MapLocationAdapter();
+        adapter.setMapLocations(mapLocations);
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        for (MapView m : mAdapter.getMaps()) {
-            m.onPause();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-
-        if (resultCode == ConnectionResult.SUCCESS) {
-            mRecyclerView.setAdapter(mAdapter);
-        } else {
-            GooglePlayServicesUtil.getErrorDialog(resultCode, this, 1).show();
-        }
-
-        for (MapView m : mAdapter.getMaps()) {
-            m.onResume();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        for (MapView m : mAdapter.getMaps()) {
-            m.onDestroy();
-        }
-
-        super.onDestroy();
-    }
-
-    /**
-     * Show a full map when a map card is selected. This method is attached to each CardView
-     * displayed within this activity's RecyclerView.
-     *
-     * @param view The view (CardView) that was clicked.
-     */
-    public void showMapDetails(View view) {
-        MapLocation map = (MapLocation) view.getTag();
-
-        Intent intent = new Intent(this, MapActivity.class);
-        intent.putExtra(MapActivity.EXTRA_LATITUDE, map.lat);
-        intent.putExtra(MapActivity.EXTRA_LONGITUDE, map.lng);
-
-        startActivity(intent);
+        return adapter;
     }
 
     private static final MapLocation[] LIST_LOCATIONS = new MapLocation[]{

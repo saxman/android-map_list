@@ -5,7 +5,7 @@ android {
     buildToolsVersion "20.0.0"
 
     defaultConfig {
-        applicationId "com.example.google.map_list"
+        applicationId "com.example.google.maplist"
         minSdkVersion 10
         targetSdkVersion 21
         versionCode 1

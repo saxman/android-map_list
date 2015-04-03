@@ -21,16 +21,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
 public class MapLocationAdapter extends RecyclerView.Adapter<MapLocationViewHolder> {
-    private HashSet<MapView> mMaps = new HashSet<>();
+    protected HashSet<MapView> mMapViews = new HashSet<>();
     protected ArrayList<MapLocation> mMapLocations;
 
     public void setMapLocations(ArrayList<MapLocation> mapLocations) {
@@ -42,7 +39,7 @@ public class MapLocationAdapter extends RecyclerView.Adapter<MapLocationViewHold
         final View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.activity_list_item, viewGroup, false);
         MapLocationViewHolder viewHolder = new MapLocationViewHolder(viewGroup.getContext(), view);
 
-        mMaps.add(viewHolder.map);
+        mMapViews.add(viewHolder.mapView);
 
         return viewHolder;
     }
@@ -56,14 +53,7 @@ public class MapLocationAdapter extends RecyclerView.Adapter<MapLocationViewHold
         viewHolder.title.setText(mapLocation.name);
         viewHolder.description.setText(mapLocation.center.latitude + " " + mapLocation.center.longitude);
 
-        // Since the map is re-used, need to remove pre-existing map features.
-        viewHolder.googleMap.clear();
-
-        // Update the map feature data and camera position.
-        viewHolder.googleMap.addMarker(new MarkerOptions().position(mapLocation.center));
-
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(mapLocation.center, 10f);
-        viewHolder.googleMap.moveCamera(cameraUpdate);
+        viewHolder.setMapLocation(mapLocation);
     }
 
     @Override
@@ -71,7 +61,7 @@ public class MapLocationAdapter extends RecyclerView.Adapter<MapLocationViewHold
         return mMapLocations == null ? 0 : mMapLocations.size();
     }
 
-    public HashSet<MapView> getMaps() {
-        return mMaps;
+    public HashSet<MapView> getMapViews() {
+        return mMapViews;
     }
 }

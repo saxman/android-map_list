@@ -16,7 +16,9 @@
 
 package com.example.google.maplist;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +40,17 @@ public class MapListActivityImpl extends MapListActivity {
         adapter.setMapLocations(mapLocations);
 
         return adapter;
+    }
+
+    @Override
+    public void showMapDetails(View view) {
+        MapLocation mapLocation = (MapLocation) view.getTag();
+
+        Intent intent = new Intent(this, MapActivity.class);
+        intent.putExtra(MapActivity.EXTRA_LATITUDE, mapLocation.center.latitude);
+        intent.putExtra(MapActivity.EXTRA_LONGITUDE, mapLocation.center.longitude);
+
+        startActivity(intent);
     }
 
     private static final MapLocation[] LIST_LOCATIONS = new MapLocation[]{

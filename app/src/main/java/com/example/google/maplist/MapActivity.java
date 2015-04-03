@@ -73,8 +73,8 @@ public class MapActivity extends ActionBarActivity implements OnMapReadyCallback
     }
 
     public void onMapReady(GoogleMap map) {
-        float lat = getIntent().getFloatExtra(EXTRA_LATITUDE, 0f);
-        float lng = getIntent().getFloatExtra(EXTRA_LONGITUDE, 0f);
+        double lat = getIntent().getDoubleExtra(EXTRA_LATITUDE, 0);
+        double lng = getIntent().getDoubleExtra(EXTRA_LONGITUDE, 0);
 
         map.addMarker(new MarkerOptions().position(new LatLng(lat, lng)));
 

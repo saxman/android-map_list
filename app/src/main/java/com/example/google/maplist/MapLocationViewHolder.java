@@ -21,36 +21,67 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapLocationViewHolder extends RecyclerView.ViewHolder {
-    public MapView map;
+public class MapLocationViewHolder extends RecyclerView.ViewHolder implements OnMapReadyCallback {
     public TextView title;
     public TextView description;
 
-    public GoogleMap googleMap;
+    protected GoogleMap mGoogleMap;
+    protected MapLocation mMapLocation;
+
+    public MapView mapView;
+    private Context mContext;
 
     public MapLocationViewHolder(Context context, View view) {
         super(view);
 
+        mContext = context;
+
         title = (TextView) view.findViewById(R.id.title);
         description = (TextView) view.findViewById(R.id.description);
-        map = (MapView) view.findViewById(R.id.map);
+        mapView = (MapView) view.findViewById(R.id.map);
 
-        // Create the MapView and initialize the corresponding GoogleMap.
-        // Should use MapView:getMapAsync() instead of MapView::getMap() (deprecated) to initialize
-        // the GoogleMap; however, this ViewHolder can be bound to
-        // (RecyclerView.Adapter::onBindViewHolder()) before the async onMapReady() callback
-        // is called. onBindViewHolder() requires access to the GoogleMap for setting
-        // map features, so there's a race condition.
+        mapView.onCreate(null);
+        mapView.getMapAsync(this);
+    }
 
-        map.onCreate(null);
+    public void setMapLocation(MapLocation mapLocation) {
+        mMapLocation = mapLocation;
 
-        MapsInitializer.initialize(context);
+        // If the map is ready, update its content.
+        if (mGoogleMap != null) {
+            updateMapContents();
+        }
+    }
 
-        googleMap = map.getMap();
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mGoogleMap = googleMap;
+
+        MapsInitializer.initialize(mContext);
         googleMap.getUiSettings().setMapToolbarEnabled(false);
+
+        // If we have map data, update the map content.
+        if (mMapLocation != null) {
+            updateMapContents();
+        }
+    }
+
+    protected void updateMapContents() {
+        // Since the mapView is re-used, need to remove pre-existing mapView features.
+        mGoogleMap.clear();
+
+        // Update the mapView feature data and camera position.
+        mGoogleMap.addMarker(new MarkerOptions().position(mMapLocation.center));
+
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(mMapLocation.center, 10f);
+        mGoogleMap.moveCamera(cameraUpdate);
     }
 }

@@ -16,7 +16,6 @@
 
 package com.example.google.maplist;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -57,7 +56,7 @@ public abstract class MapListActivity extends ActionBarActivity {
         super.onLowMemory();
 
         if (mListAdapter != null) {
-            for (MapView m : mListAdapter.getMaps()) {
+            for (MapView m : mListAdapter.getMapViews()) {
                 m.onLowMemory();
             }
         }
@@ -68,7 +67,7 @@ public abstract class MapListActivity extends ActionBarActivity {
         super.onPause();
 
         if (mListAdapter != null) {
-            for (MapView m : mListAdapter.getMaps()) {
+            for (MapView m : mListAdapter.getMapViews()) {
                 m.onPause();
             }
         }
@@ -87,7 +86,7 @@ public abstract class MapListActivity extends ActionBarActivity {
         }
 
         if (mListAdapter != null) {
-            for (MapView m : mListAdapter.getMaps()) {
+            for (MapView m : mListAdapter.getMapViews()) {
                 m.onResume();
             }
         }
@@ -96,7 +95,7 @@ public abstract class MapListActivity extends ActionBarActivity {
     @Override
     protected void onDestroy() {
         if (mListAdapter != null) {
-            for (MapView m : mListAdapter.getMaps()) {
+            for (MapView m : mListAdapter.getMapViews()) {
                 m.onDestroy();
             }
         }
@@ -105,18 +104,10 @@ public abstract class MapListActivity extends ActionBarActivity {
     }
 
     /**
-     * Show a full map when a map card is selected. This method is attached to each CardView
+     * Show a full mapView when a mapView card is selected. This method is attached to each CardView
      * displayed within this activity's RecyclerView.
      *
      * @param view The view (CardView) that was clicked.
      */
-    public void showMapDetails(View view) {
-        MapLocation mapLocation = (MapLocation) view.getTag();
-
-        Intent intent = new Intent(this, MapActivity.class);
-        intent.putExtra(MapActivity.EXTRA_LATITUDE, mapLocation.center.latitude);
-        intent.putExtra(MapActivity.EXTRA_LONGITUDE, mapLocation.center.longitude);
-
-        startActivity(intent);
-    }
+    public abstract void showMapDetails(View view);
 }
